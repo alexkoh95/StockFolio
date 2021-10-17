@@ -1,0 +1,12 @@
+flask
+flask-extended-jwt
+flask-api
+marshmallow
+sqlaclhemy-orm
+
+
+SECRET_KEY = HITHISISTHESECRETKEY
+JWT_SECRET_KEY = THISISTHETEMPORARYJWTSECRETKEY
+DATABASE_URI =
+#  postgres://db_user_stockfolio_alex:example123@localhost:5432/stockfolio
+#  os.urandom(12)
