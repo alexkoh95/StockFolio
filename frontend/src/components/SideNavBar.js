@@ -7,9 +7,7 @@ const SideNavBar = () => {
       <div className="pt-12">
         {" "}
         <h1 className="font-extrabold text-2xl text-indigo-600">
-          <Link to="/dashboard">
-            <em>kcal</em>culate
-          </Link>
+          <Link to="/dashboard">StockFolio</Link>
         </h1>{" "}
       </div>
 
@@ -51,7 +49,7 @@ const SideNavBar = () => {
           </svg>
           <span className="inline-flex ml-3">
             {" "}
-            <Link to="/log"> Log </Link>
+            <Link to="/StockSearch"> Stock Search </Link>
           </span>
         </div>
         <div className="block flex items-center justify-left pl-12 uppercase font-normal tracking-widest hover:shadow-md py-3 hover:text-white hover:bg-indigo-600">
@@ -71,7 +69,7 @@ const SideNavBar = () => {
           </svg>
           <span className="inline-flex ml-3">
             {" "}
-            <Link to="/loghistory"> Log History </Link>
+            <Link to="/Performance"> Performance </Link>
           </span>
         </div>
         <div className="block flex items-center justify-left pl-12 uppercase font-normal tracking-widest hover:shadow-md py-3 hover:text-white hover:bg-indigo-600">

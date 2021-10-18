@@ -6,18 +6,11 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-// import Signup from "./components/SignupLogin/Signup";
-// import Dashboard from "./components/Dashboard/Dashboard";
-// import Log from "./components/Log/Log";
-// import History from "./components/LogHistory/History";
-// import Settings from "./components/Settings/Settings";
-// import EditLogModal from "./components/Log/EditLogModal";
-// import Deletelog from "./components/Log/Deletelog";
-// import DailyInformationPage from "./components/LogHistory/DailyInformationPage";
-// import Main from "./components/SignupLogin/Main";
-// import Signin from "./components/SignupLogin/Signin";
-// import SignupNext from "./components/SignupLogin/SignupNext";
-// import SettingsPage from "./components/Settings/SettingsPage";
+import Dashboard from "./components/Dashboard/Dashboard";
+import HomePage from "../src/components/HomePage.js";
+import Settings from "./components/Settings/Settings";
+import StockSearch from "./components/StockSearch/StockSearch";
+import Performance from "./components/Performance/Performance";
 
 // Josiah notes:
 // done -- add props to sign-in props={ }
@@ -53,11 +46,12 @@ function App() {
       <div className="App bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-100 min-h-screen">
         <main>
           <Switch>
-            <Route path="/main"></Route>
-            <Route path="/signin" exact></Route>
-            <Route path="/homepage"></Route>
+            <Route path="/homepage" exact component={HomePage}></Route>
+            <Route path="/Dashboard" exact component={Dashboard}></Route>
+            <Route path="/Performance" exact component={Performance}></Route>
+            <Route path="/Settings" exact component={Settings}></Route>
+            <Route path="/StockSearch" exact component={StockSearch}></Route>
           </Switch>
-          <div>Hello, Welcome to the first line of StockFOlio</div>
         </main>
       </div>
     </Router>

@@ -1,13 +1,11 @@
 import React from "react";
-import SideNavBar from "../components/SideNavBar";
-// import Dashboard from "../components/Dashboard/Dashboard";
-// import Log from "../components/Log/Log";
-// import History from "../components/LogHistory/History";
-// import Settings from "../components/Settings/Settings";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import EditLogModal from "./Log/EditLogModal";
-// import Deletelog from "./Log/Deletelog";
-// import DailyInformationPage from "./LogHistory/DailyInformationPage";
+
+import SideNavBar from "../components/SideNavBar";
+import Dashboard from "../components/Dashboard/Dashboard";
+import Settings from "../components/Settings/Settings";
+import StockSearch from "../components/StockSearch/StockSearch";
+import Performance from "../components/Performance/Performance";
 
 const HomePage = () => {
   return (
@@ -17,18 +15,12 @@ const HomePage = () => {
           <SideNavBar />
         </div>
         <main className="mx-4 p-9 pl-64">
+          <div>Hello Hello this is homepage</div>
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/log" exact component={Log} />
-            <Route path="/log/:id" exact component={EditLogModal} />
-            <Route path="/log/delete/:id" exact component={Deletelog} />
-            <Route path="/loghistory" exact component={History} />
-            <Route
-              path="/loghistory/DailyInformationPage"
-              exact
-              component={DailyInformationPage}
-            />
-            <Route path="/settings" exact component={Settings} />
+            <Route path="/Performance" exact component={Performance} />
+            <Route path="/StockSearch" exact component={StockSearch} />
+            <Route path="/Settings" exact component={Settings} />
           </Switch>
         </main>
       </div>

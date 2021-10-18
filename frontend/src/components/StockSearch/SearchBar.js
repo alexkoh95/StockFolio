@@ -10,8 +10,7 @@ const SearchBar = (props) => {
       <input
         className="px-4 py-1 h-10 w-72 text-gray-700 text-md bg-transparent border-2 border-white rounded-full focus:outline-none shadow-md shadow-inner"
         type="text"
-        placeholder="Enter your stock search"
-        onChange={handleChange}
+        placeholder="Enter symbol (e.g. AAPL)"
       />
     </div>
   );
