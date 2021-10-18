@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import SideNavBar from "../SideNavBar";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import Result from "./Result";
 
-const APIKEY = " TWNBNVG7D50RBO6F";
+// alex.koh95@hotmail.com API
+// const APIKEY = "TWNBNVG7D50RBO6F";
+// UCL API
+const APIKEY = "TD5BNJPDBLJKBVAE";
 
 const StockSearch = () => {
   // =====================================================
@@ -17,9 +20,8 @@ const StockSearch = () => {
         <SideNavBar />
       </div>
       <main className="mx-4 p-9 pl-64">
-        <h1>This is StockSearch Page</h1>
-        <SearchBar />
-        <Result APIKEY={APIKEY} searchTerm={searchTerm} />
+        {/* <SearchBar setSearchTerm={setSearchTerm} /> */}
+        <Result APIKEY={APIKEY} setsearchTerm={setSearchTerm} />
       </main>
     </div>
   );
