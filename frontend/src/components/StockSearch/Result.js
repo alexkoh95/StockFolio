@@ -75,31 +75,40 @@ const Result = (props) => {
             {element.name}
             <br />
           </div>
-        </div>
-        <div className="text-xs text-left my-auto leading-3 ">
-          Symbol: <span className="text-bold">{element.symbol}</span>
-          <br />
-          Equity Type: <span className="text-bold">{element.equityType}</span>
-          <br />
-          Price: <span className="text-bold">{element.price}</span>
-          <br />
-          Sector: <span className="text-bold">{element.sector}</span>
-          <br />
-          Industry: <span className="text-bold">{element.industry}</span>
-          <br />
-          50 Day Moving Average:{" "}
-          <span className="text-bold">{element.fiftyDayMovingAverage}</span>
-          <br />
-          52 Week High: <span className="text-bold">{element.oneYearHigh}</span>
-          <br />
-          52 Week Low: <span className="text-bold">{element.oneYearLow}</span>
-          <br />
-          Analyst Target Price:{" "}
-          <span className="text-bold">{element.analystTargetPrice}</span>
-          <br />
-          Company Description:{" "}
-          <span className="text-bold">{element.description}</span>
-          <br />
+          <div className="text-xs text-left my-auto leading-3 ">
+            Symbol: <span className="text-bold">{element.symbol}</span>
+            <br />
+            Equity Type: <span className="text-bold">{element.equityType}</span>
+            <br />
+            Price: <span className="text-bold">{element.price}</span>
+            <br />
+            Sector: <span className="text-bold">{element.sector}</span>
+            <br />
+            Industry: <span className="text-bold">{element.industry}</span>
+            <br />
+            50 Day Moving Average:{" "}
+            <span className="text-bold">{element.fiftyDayMovingAverage}</span>
+            <br />
+            52 Week High:{" "}
+            <span className="text-bold">{element.oneYearHigh}</span>
+            <br />
+            52 Week Low: <span className="text-bold">{element.oneYearLow}</span>
+            <br />
+            Analyst Target Price:{" "}
+            <span className="text-bold">{element.analystTargetPrice}</span>
+            <br />
+            Company Description:{" "}
+            <span className="text-bold">{element.description}</span>
+            <br />
+          </div>
+          <div clasName="my-auto">
+            <button
+              onClick={() => props.handleClick(element)}
+              className="rounded-full bg-indigo-600 text-white px-5 py-1 text-sm shadow-md hover:bg-indigo-700"
+            >
+              Purchase this stock?
+            </button>
+          </div>
         </div>
       </div>
     );

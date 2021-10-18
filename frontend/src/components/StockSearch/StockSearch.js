@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideNavBar from "../SideNavBar";
 // import SearchBar from "./SearchBar";
 import Result from "./Result";
+import StockPurchase from "./StockPurchase";
 
 // alex.koh95@hotmail.com API
 // const APIKEY = "TWNBNVG7D50RBO6F";
@@ -13,6 +14,13 @@ const StockSearch = () => {
   //                  USE STATES & VARIABLES
   // =====================================================
   const [searchTerm, setSearchTerm] = useState("");
+  const [stockToPurchase, setStockToPurchase] = useState([]);
+  const addToStockPurchase = (item) => {
+    console.log("Adding to stock purcase in STOCKSEARCH page");
+    setStockToPurchase(item);
+    console.log(stockToPurchase);
+    console.log(stockToPurchase);
+  };
 
   return (
     <div>
@@ -21,7 +29,15 @@ const StockSearch = () => {
       </div>
       <main className="mx-4 p-9 pl-64">
         {/* <SearchBar setSearchTerm={setSearchTerm} /> */}
-        <Result APIKEY={APIKEY} setsearchTerm={setSearchTerm} />
+        <Result
+          APIKEY={APIKEY}
+          setsearchTerm={setSearchTerm}
+          handleClick={addToStockPurchase}
+        />
+        <StockPurchase
+          stockToPurchase={stockToPurchase}
+          setStockToPurchase={setStockToPurchase}
+        />
       </main>
     </div>
   );
