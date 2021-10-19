@@ -3,3 +3,25 @@ flask-extended-jwt
 flask-api
 marshmallow - serializer/deserializer
 sqlalchemy - ORM
+
+
+sql codes to create tables
+
+stock_purchases table
+CREATE TABLE public.stock_purchases (
+	user_uuid uuid NOT NULL,
+	stock_purchase_id serial NOT NULL,
+	stock_name varchar(100) NOT NULL,
+	equity_type varchar(50) NOT NULL,
+	symbol varchar(10) NULL,
+	price_bought float4 NOT NULL,
+	industry varchar(500) NOT NULL,
+	sector varchar(500) NOT NULL,
+	total_shares float4 NOT NULL,
+	value_at_time_of_purchase date NOT NULL,
+	currency varchar(20) NOT NULL,
+	is_sold boolean NOT NULL,
+	CONSTRAINT stock_purchase_pk PRIMARY KEY (value_at_time_of_purchase,stock_purchase_id),
+	CONSTRAINT stock_purchases_fk FOREIGN KEY (user_uuid) REFERENCES public.users(uuid)
+);
+

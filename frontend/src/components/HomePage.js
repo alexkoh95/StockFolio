@@ -15,7 +15,6 @@ const HomePage = () => {
           <SideNavBar />
         </div>
         <main className="mx-4 p-9 pl-64">
-          <div>Hello Hello this is homepage</div>
           <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/Performance" exact component={Performance} />

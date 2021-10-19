@@ -10,10 +10,13 @@ from jwt import DecodeError
 from marshmallow import ValidationError
 
 from models.users import UsersModel
+from models.stock_purchases import StockPurchasesModel
+
 from auth import is_token_revoked
 from mm import mm
 from models.db import db
 from resources import users
+from resources import stock_purchases
 
 os.environ['DATABASE_URI'] = "postgresql://db_user_stockfolio_alex:example123@localhost:5432/stockfolio"
 os.environ['APP_SECRET_KEY'] = "THISISTHESECRETKEY"
@@ -46,6 +49,7 @@ db.init_app(app)
 mm.init_app(app)
 api = Api(app)
 jwt = JWTManager(app)
+
 
 
 @app.errorhandler(ValidationError)
@@ -110,5 +114,8 @@ api.add_resource(users.RefreshToken, '/refresh')
 # users
 api.add_resource(users.Users, '/users')
 
+# stock_purchases
+api.add_resource(stock_purchases.StockPurchases, '/stockpurchase')
+
 if __name__ == '__main__':
-    app.run(port=5002, debug=False)
+    app.run(port=5000, debug=False)

@@ -3,17 +3,17 @@ from typing import List
 from sqlalchemy.dialects.postgresql import UUID, TIMESTAMP
 
 from models.db import db
-#  from . db import db
+
 
 
 class AuthModel(db.Model):
     __tablename__ = 'auth'
 
-    id = db.Column(db.INT, server_default=db.FetchedValue(), primary_key=True)
-    user_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey('users.uuid'), nullable=False)
+    id = db.Column(db.INT, server_default=db.FetchedValue(), primary_key=True) #  this has to be a serial
+    user_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey('users.uuid'), nullable=False) #  this has to be from user table
     jti = db.Column(db.VARCHAR(36), nullable=False)
     expires = db.Column(TIMESTAMP, nullable=False)
-    parent_access_token_id = db.Column(db.INT, db.ForeignKey('auth.id'))
+    parent_access_token_id = db.Column(db.INT, db.ForeignKey('auth.id')) #  this is basically pointing to itself
 
     @classmethod
     def find_by_id(cls, _id: int) -> "AuthModel":

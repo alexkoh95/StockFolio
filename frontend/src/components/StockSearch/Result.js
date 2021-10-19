@@ -52,7 +52,7 @@ const Result = (props) => {
 
   let displayedStockResults = [
     {
-      name: companyResults[2],
+      stockName: companyResults[2],
       equityType: companyResults[1],
       symbol: companyResults[0],
       price: stockResults[4],
@@ -63,6 +63,7 @@ const Result = (props) => {
       oneYearHigh: companyResults[39],
       oneYearLow: companyResults[40],
       analystTargetPrice: companyResults[31],
+      currency: companyResults[6],
     },
   ];
 
@@ -72,7 +73,7 @@ const Result = (props) => {
       <div>
         <div className="grid grid-cols-3 flex py-3 m-4 bg-white bg-opacity-40 shadow-lg rounded-lg ">
           <div className="my-auto capitalize text-lg font-bold">
-            {element.name}
+            {element.stockName}
             <br />
           </div>
           <div className="text-xs text-left my-auto leading-3 ">

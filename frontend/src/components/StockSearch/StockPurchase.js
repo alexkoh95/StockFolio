@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+const moment = require("moment");
 
 const StockPurchase = (props) => {
   // =====================================================
@@ -17,6 +18,7 @@ const StockPurchase = (props) => {
     console.log(stocksToPurchaseCalc);
   }, [props.stockToPurchase]);
 
+  const todayDate = moment().format("dddd MMMM Do YYYY");
   // =====================================================
   //                  FUNCTIONS
   // =====================================================
@@ -30,7 +32,9 @@ const StockPurchase = (props) => {
   const submitTotalShares = (event) => {
     setStocksToPurchaseCalc((prevState) => {
       const newArray = [stocksToPurchaseCalc];
-      let totalValue = stocksToPurchaseCalc[0].price * totalSharesPurchased;
+      let totalValue = Math.round(
+        stocksToPurchaseCalc[0].price * totalSharesPurchased
+      );
       let addingSharesToData = [
         Object.assign(newArray[0], {
           totalShares: totalSharesPurchased,
@@ -45,31 +49,41 @@ const StockPurchase = (props) => {
   const submitToDataBase = async (event) => {
     event.preventDefault();
 
-    const name = stocksToPurchaseCalc[0].name;
-    const equityType = stocksToPurchaseCalc[0].equityType;
+    const stock_name = stocksToPurchaseCalc[0].stockName;
+    const equity_type = stocksToPurchaseCalc[0].equityType;
     const symbol = stocksToPurchaseCalc[0].symbol;
-    const price = stocksToPurchaseCalc[0].price;
+    const price_bought = stocksToPurchaseCalc[0].price;
     const sector = stocksToPurchaseCalc[0].sector;
     const industry = stocksToPurchaseCalc[0].industry;
-    const totalShares = stocksToPurchaseCalc[0].totalShares;
-    const valueAtTimeOfPurchase = stocksToPurchaseCalc[0].value;
+    const total_shares = stocksToPurchaseCalc[0].totalShares;
+    const value_at_time_of_purchase = stocksToPurchaseCalc[0].value;
+    const currency = stocksToPurchaseCalc[0].currency;
+    const is_sold = false;
+    const date_bought = todayDate;
 
     const submitToDataBase = {
-      name,
-      equityType,
+      stock_name,
+      equity_type,
       symbol,
-      price,
+      price_bought,
       sector,
       industry,
-      totalShares,
-      valueAtTimeOfPurchase,
+      total_shares,
+      value_at_time_of_purchase,
+      currency,
+      is_sold,
+      date_bought,
+    };
+
+    const config = {
+      headers: { Authorization: "Bearer token" },
     };
 
     axios
-      .post("http://localhost:5000/stocks", submitToDataBase)
+      .put("http://localhost:5000/stockpurchase", submitToDataBase, config)
       .then((res) => console.log("Stock Purchase Successful", res.data));
 
-    props.setStocksToPurchaseCalc([]);
+    props.setStockToPurchase([]);
   };
 
   // =====================================================
@@ -100,15 +114,16 @@ const StockPurchase = (props) => {
               <div className="my-auto">
                 <div className="text-3xl capitalise pt-1">
                   <strong>
-                    Stock Information: {element.name} {element.symbol}
+                    {element.stockName} {element.symbol}
                   </strong>
                   <br />
-                  <strong>Price: </strong> {element.price} <br />
+                  <strong>Price : </strong> {element.price} {element.currency}
+                  <br />
                   <strong>Total Value to Purchase:</strong> {element.value}
                 </div>
                 <button
                   className=" bg-black text-white uppercase tracking-wider px-3 py-1 mt-2 text-xs shadow-md"
-                  // onClick={submitToDataBase}
+                  onClick={submitToDataBase}
                 >
                   {" "}
                   Purchase Shares

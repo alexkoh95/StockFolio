@@ -11,6 +11,8 @@ import HomePage from "../src/components/HomePage.js";
 import Settings from "./components/Settings/Settings";
 import StockSearch from "./components/StockSearch/StockSearch";
 import Performance from "./components/Performance/Performance";
+import SignIn from "./components/SignupLogin/SignIn";
+import SignUp from "./components/SignupLogin/SignUp";
 
 // Josiah notes:
 // done -- add props to sign-in props={ }
@@ -20,37 +22,62 @@ import Performance from "./components/Performance/Performance";
 // userState to be null after logout
 
 function App() {
-  // const [auth, setAuth] = useState(false);
-  // const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // const handleChange = async (userData) => {
-  //   setAuth(true);
-  //   await setUser(userData);
-  //   console.log("userData: ", userData);
-  //   // console.log("setUser: ", setUser)
-  //   console.log("user state: ", user);
-  //   // console.log("inside auth :", auth)
-  //   // console.log("inside user :", user)
-  // };
-  // // console.log("outside auth :", auth)
-  // console.log("outside user :", user)
-
-  // NEED TO PROPS AND CALL THIS ALONG NAV BAR
-  // const handleLogout = async (event) => {
-  //   setAuth(false);
-  //   await setUser(null);
-  // };
+  const handleSignIn = () => {
+    setAuth(true);
+  };
+  const handleLogout = async (event) => {
+    setAuth(false);
+    await setUser(null);
+  };
 
   return (
     <Router>
       <div className="App bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-100 min-h-screen">
         <main>
           <Switch>
-            <Route path="/homepage" exact component={HomePage}></Route>
-            <Route path="/Dashboard" exact component={Dashboard}></Route>
-            <Route path="/Performance" exact component={Performance}></Route>
-            <Route path="/Settings" exact component={Settings}></Route>
-            <Route path="/StockSearch" exact component={StockSearch}></Route>
+            <Route path="/signin" exact>
+              <SignIn handleSignIn={handleSignIn} setAuth={setAuth} />
+            </Route>
+            <Route path="/signup" exact component={SignUp} />
+            <PrivateRoute
+              path="/homepage"
+              exact
+              Component={HomePage}
+              auth={auth}
+              userLogin={user}
+            />
+
+            <PrivateRoute
+              path="/Dashboard"
+              exact
+              Component={Dashboard}
+              auth={auth}
+              userLogin={user}
+            />
+            <PrivateRoute
+              path="/Performance"
+              exact
+              Component={Performance}
+              auth={auth}
+              userLogin={user}
+            />
+            <PrivateRoute
+              path="/Settings"
+              exact
+              Component={Settings}
+              auth={auth}
+              userLogin={user}
+            />
+            <PrivateRoute
+              path="/StockSearch"
+              exact
+              Component={StockSearch}
+              auth={auth}
+              userLogin={user}
+            />
           </Switch>
         </main>
       </div>
@@ -58,24 +85,24 @@ function App() {
   );
 }
 
-// function PrivateRoute({ auth, Component, path, location, ...rest }) {
-//   //if auth is true then show Route else redirect to login
-//   return (
-//     <>
-//       {auth ? (
-//         <Route path={path}>
-//           <Component {...rest} />
-//         </Route>
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: "/",
-//             state: { from: location },
-//           }}
-//         />
-//       )}
-//     </>
-//   );
-// }
+function PrivateRoute({ auth, Component, path, location, ...rest }) {
+  //if auth is true then show Route else redirect to login
+  return (
+    <>
+      {auth ? (
+        <Route path={path}>
+          <Component {...rest} />
+        </Route>
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { from: location },
+          }}
+        />
+      )}
+    </>
+  );
+}
 
 export default App;

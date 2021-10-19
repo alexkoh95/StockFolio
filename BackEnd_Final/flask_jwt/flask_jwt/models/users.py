@@ -5,15 +5,15 @@ from models.db import db
 
 
 class UsersModel(db.Model):
-    __tablename__ = 'usermodel'
+    __tablename__ = 'users'
 
     uuid = db.Column(UUID(as_uuid=True), server_default=db.FetchedValue(), primary_key=True)
     email = db.Column(db.VARCHAR(50), nullable=False)
     name = db.Column(db.VARCHAR(50), nullable=False)
-    #  role = db.Column(db.VARCHAR(5), nullable=True)
+    role = db.Column(db.VARCHAR(5), nullable=True)
     salt = db.Column(db.VARCHAR(100), nullable=False)
     hash = db.Column(db.VARCHAR(100), nullable=False)
-    #  created_at = db.Column(TIMESTAMP, server_default=db.FetchedValue(), nullable=False)
+    created_at = db.Column(TIMESTAMP, server_default=db.FetchedValue(), nullable=False)
 
 # all the methods to query the data are here
 
