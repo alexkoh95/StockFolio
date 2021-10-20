@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-// import "./App.css";
+import React, { useState, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,17 +12,14 @@ import StockSearch from "./components/StockSearch/StockSearch";
 import Performance from "./components/Performance/Performance";
 import SignIn from "./components/SignupLogin/SignIn";
 import SignUp from "./components/SignupLogin/SignUp";
-
-// Josiah notes:
-// done -- add props to sign-in props={ }
-// done -- add 2 states, pass them to sign-in
-// done -- private router wrap up member pages
-// add logout component/function force auth state to be false
-// userState to be null after logout
+import { AuthenticationContext } from "./components/SignupLogin/AuthenticationTokens";
+import { UserNameContext } from "./components/SignupLogin/UserNameGlobal";
 
 function App() {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState(null);
+  const [tokens, setTokens] = useState({});
+  const [userName, setUserName] = useState("");
 
   const handleSignIn = () => {
     setAuth(true);
@@ -34,54 +30,67 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="App bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-100 min-h-screen">
-        <main>
-          <Switch>
-            <Route path="/signin" exact>
-              <SignIn handleSignIn={handleSignIn} setAuth={setAuth} />
-            </Route>
-            <Route path="/signup" exact component={SignUp} />
-            <PrivateRoute
-              path="/homepage"
-              exact
-              Component={HomePage}
-              auth={auth}
-              userLogin={user}
-            />
+    // <TokensContext>
 
-            <PrivateRoute
-              path="/Dashboard"
-              exact
-              Component={Dashboard}
-              auth={auth}
-              userLogin={user}
-            />
-            <PrivateRoute
-              path="/Performance"
-              exact
-              Component={Performance}
-              auth={auth}
-              userLogin={user}
-            />
-            <PrivateRoute
-              path="/Settings"
-              exact
-              Component={Settings}
-              auth={auth}
-              userLogin={user}
-            />
-            <PrivateRoute
-              path="/StockSearch"
-              exact
-              Component={StockSearch}
-              auth={auth}
-              userLogin={user}
-            />
-          </Switch>
-        </main>
-      </div>
+    <Router>
+      <AuthenticationContext.Provider value={tokens}>
+        <UserNameContext.Provider value={userName}>
+          <div className="App bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-100 min-h-screen">
+            <main>
+              <Switch>
+                <Route path="/signin" exact>
+                  <SignIn
+                    handleSignIn={handleSignIn}
+                    setAuth={setAuth}
+                    setTokens={setTokens}
+                    setUserName={setUserName}
+                  />
+                </Route>
+                <Route path="/signup" exact component={SignUp} />
+                <PrivateRoute
+                  path="/homepage"
+                  exact
+                  Component={HomePage}
+                  auth={auth}
+                  userLogin={user}
+                />
+
+                <PrivateRoute
+                  path="/Dashboard"
+                  exact
+                  Component={Dashboard}
+                  auth={auth}
+                  userLogin={user}
+                />
+                <PrivateRoute
+                  path="/Performance"
+                  exact
+                  Component={Performance}
+                  auth={auth}
+                  userLogin={user}
+                />
+                <PrivateRoute
+                  path="/Settings"
+                  exact
+                  Component={Settings}
+                  auth={auth}
+                  userLogin={user}
+                />
+                <PrivateRoute
+                  path="/StockSearch"
+                  exact
+                  Component={StockSearch}
+                  auth={auth}
+                  userLogin={user}
+                />
+              </Switch>
+            </main>
+          </div>
+        </UserNameContext.Provider>
+      </AuthenticationContext.Provider>
     </Router>
+
+    // </TokensContext>
   );
 }
 

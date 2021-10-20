@@ -8,86 +8,34 @@ from flask_restful import Resource
 import auth
 import schemas
 
-from models.stock_purchases import StockPurchasesModel
+from models.user_account_values import UserAccountValueModel
 
 
-# def find_duplicate_email(email):
-#     users_model = UsersModel.find_by_email(email)
-#
-#     if users_model:
-#         return True
-#     else:
-#         return False
-#
-#
-# def gen_random_string(n):
-#     s = secrets.token_urlsafe(64)
-#     return s[:n]
-#
-#
-# def hash_password(password):
-#     salt = gen_random_string(50)
-#
-#     password_salt = password + salt
-#
-#     ph = argon2.PasswordHasher()
-#     _hash = ph.hash(password_salt)
-#
-#     return salt, _hash
+class UserAccountValue(Resource):
 
-
-class StockPurchases(Resource):
-
-    @classmethod
-    @jwt_required()
-    def get(cls):
-        stockPurchases_list = StockPurchasesModel.find_all_byUUID()
-
-        return schemas.Users(many=True).dump(stockPurchases_list), 200
-
-    # create Stock Purchase
+    # create UserAccountValue
     @classmethod
     @jwt_required()
     def put(cls):
         input_json = schemas.InputStockPurchasesData().load(request.get_json())
         # input uuid line get_user_uuid
         user_uuid = get_jwt_identity()
-        stock_name = input_json['stock_name']
-        equity_type = input_json['equity_type']
-        symbol = input_json['symbol']
-        price_bought = input_json['price_bought']
-        sector = input_json['sector']
-        industry = input_json['industry']
-        total_shares = input_json['total_shares']
-        value_at_time_of_purchase = input_json['value_at_time_of_purchase']
-        currency = input_json['currency']
-        is_sold = input_json['is_sold']
-        date_bought = input_json['date_bought']
+        account_cash = 250000
 
         try:
 
-            stock_purchases_model = StockPurchasesModel(
+            user_account_value_model = UserAccountValueModel(
                 user_uuid=user_uuid,
-                stock_name=stock_name,
-                equity_type=equity_type,
-                symbol=symbol,
-                price_bought=price_bought,
-                sector=sector,
-                industry=industry,
-                total_shares=total_shares,
-                value_at_time_of_purchase=value_at_time_of_purchase,
-                currency=currency,
-                is_sold=is_sold,
-                date_bought=date_bought,
+                account_cash=account_cash,
             )
 
-            stock_purchases_model.save()
+            user_account_value_model.save()
 
         except Exception as error:
-            print(f'Stock Purchase error: {error}')
-            return {'Error': 'Stock Not Purchased'}, 400
+            print(f'User Account Value Creation Error: {error}')
+            return {'Error': 'User Account Value not created (You have no money!)'}, 400
 
-        return {'msg': 'Stock Purchased.'}, 200
+        return {'msg': 'User Account Value Created - You have $250,000!.'}, 200
     #
     # # select user with email
     # @classmethod

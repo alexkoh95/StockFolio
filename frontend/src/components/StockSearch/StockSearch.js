@@ -16,10 +16,7 @@ const StockSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [stockToPurchase, setStockToPurchase] = useState([]);
   const addToStockPurchase = (item) => {
-    console.log("Adding to stock purcase in STOCKSEARCH page");
     setStockToPurchase(item);
-    console.log(stockToPurchase);
-    console.log(stockToPurchase);
   };
 
   return (

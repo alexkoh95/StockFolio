@@ -17,6 +17,7 @@ from mm import mm
 from models.db import db
 from resources import users
 from resources import stock_purchases
+from resources import user_account_values
 
 os.environ['DATABASE_URI'] = "postgresql://db_user_stockfolio_alex:example123@localhost:5432/stockfolio"
 os.environ['APP_SECRET_KEY'] = "THISISTHESECRETKEY"
@@ -113,6 +114,7 @@ api.add_resource(users.RefreshToken, '/refresh')
 
 # users
 api.add_resource(users.Users, '/users')
+api.add_resource(user_account_values.UserAccountValue, '/useraccountvalue')
 
 # stock_purchases
 api.add_resource(stock_purchases.StockPurchases, '/stockpurchase')

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-// import Dashboard from '../Dashboard/Dashboard';
+import Particles from "react-tsparticles";
 
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState("");
+  // const [authenticated, setAuthenticated] = useState("");
   // store the token in a useState and then useContext
+  // const particlesInit = (main) => {
+  //   console.log(main);
+  // };
+
+  // const particlesLoaded = (container) => {
+  //   console.log(container);
+  // };
 
   const history = useHistory();
 
@@ -34,10 +41,8 @@ const SignIn = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer token",
         },
         body: JSON.stringify(existingUser),
-        // mode: "no-cors",
       };
 
       try {
@@ -47,19 +52,16 @@ const SignIn = (props) => {
         console.log(
           "Backend POST method successfully run - email, password authenticated"
         );
+        const tokensObjectData = {
+          access: data.access,
+          refresh: data.refresh,
+        };
+        // store the access and refresh token (like a useContext)
         props.setAuth(true);
+        props.setTokens(tokensObjectData);
+        props.setUserName(email);
+        console.log(email);
         history.push("/stocksearch");
-
-        // if (data.status === "ok") {
-        //   console.log("user valid");
-        //   console.log("signin: ", data.user);
-        //   //   setAuthenticated(data.jwt) OR do authorisation
-        //   props.handleChange(data.user);
-        //   history.push("/stocksearch");
-        //   // console.log(theUser)
-        // } else {
-        //   console.log("email/password invalid");
-        // }
       } catch (err) {
         console.log(err);
       }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -46,8 +47,20 @@ const SignUp = () => {
         body: JSON.stringify(newUser),
       };
 
-      const res = await fetch("http://localhost:5000/users", requestOptions);
+      // const requestOptions2 = {
+      //   method: "PUT",
+      //   headers: { "Content-Type": "application/json" },
+      // };
 
+      const res = await fetch("http://localhost:5000/users", requestOptions);
+      // const res2 = await fetch(
+      //   "http://localhost:5000/useraccountvalue",
+      //   requestOptions
+      // );
+      // const res = await Promise.all(
+      //   [await axios.put("http://localhost:5000/users", requestOptions)],
+      //   [await axios.put("https://localhost:5000/useraccountvalue")]
+      // );
       history.push("/signin");
     } else {
       console.log("Passwords do not match. Please try again");

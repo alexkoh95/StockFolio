@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { AuthenticationContext } from "../SignupLogin/AuthenticationTokens";
+
 const moment = require("moment");
 
 const StockPurchase = (props) => {
@@ -12,13 +14,17 @@ const StockPurchase = (props) => {
   const [totalSharesPurchased, setTotalSharesPurchased] = useState();
   const [stocksToPurchaseCalc, setStocksToPurchaseCalc] = useState();
 
+  const tokens = useContext(AuthenticationContext);
+
   useEffect(() => {
+    // console.log(props.stockToPurchase);
     setStocksToPurchaseCalc([props.stockToPurchase]);
-    console.log("Adding to stock purchase in STOCKPURCHASE PAGE");
-    console.log(stocksToPurchaseCalc);
+    // console.log("Adding to stock purchase in STOCKPURCHASE PAGE");
+    // console.log(stocksToPurchaseCalc);
   }, [props.stockToPurchase]);
 
-  const todayDate = moment().format("dddd MMMM Do YYYY");
+  //to get 2015-06-19 etc YYYY-MM-DD
+  const todayDate = moment().format("YYYY-MM-DD");
   // =====================================================
   //                  FUNCTIONS
   // =====================================================
@@ -29,21 +35,19 @@ const StockPurchase = (props) => {
     });
   };
 
-  const submitTotalShares = (event) => {
-    setStocksToPurchaseCalc((prevState) => {
+  const submitTotalShares = () => {
+    setStocksToPurchaseCalc(() => {
       const newArray = [stocksToPurchaseCalc];
       let totalValue = Math.round(
         stocksToPurchaseCalc[0].price * totalSharesPurchased
       );
-      let addingSharesToData = [
-        Object.assign(newArray[0], {
-          totalShares: totalSharesPurchased,
-          value: totalValue,
-        }),
-      ];
-      return addingSharesToData;
+      newArray[0][0].totalShares = parseInt(totalSharesPurchased);
+      newArray[0][0].value = totalValue;
+      console.log(newArray[0]);
+      return newArray[0];
     });
-    console.log(stocksToPurchaseCalc);
+
+    // console.log(stocksToPurchaseCalc);
   };
 
   const submitToDataBase = async (event) => {
@@ -76,9 +80,10 @@ const StockPurchase = (props) => {
     };
 
     const config = {
-      headers: { Authorization: "Bearer token" },
+      headers: { Authorization: `Bearer ${tokens.access}` },
     };
 
+    console.log(submitToDataBase);
     axios
       .put("http://localhost:5000/stockpurchase", submitToDataBase, config)
       .then((res) => console.log("Stock Purchase Successful", res.data));

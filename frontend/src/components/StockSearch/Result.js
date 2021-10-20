@@ -71,35 +71,68 @@ const Result = (props) => {
   displayedStockResults2 = displayedStockResults?.map((element, index) => {
     return (
       <div>
-        <div className="grid grid-cols-3 flex py-3 m-4 bg-white bg-opacity-40 shadow-lg rounded-lg ">
-          <div className="my-auto capitalize text-lg font-bold">
-            {element.stockName}
+        <div className="grid grid-cols-2 flex py-3 m-4 bg-white bg-opacity-40 shadow-lg rounded-lg">
+          <div>
+            <div className="my-auto capitalize text-lg font-bold">
+              {element.stockName}
+              <br />
+            </div>
+            <div>
+              <div>
+                <strong>Company Description:</strong>{" "}
+                <span className="text-bold">{element.description}</span>
+              </div>
+            </div>
             <br />
           </div>
           <div className="text-xs text-left my-auto leading-3 ">
-            Symbol: <span className="text-bold">{element.symbol}</span>
+            <div>
+              <strong>Symbol:</strong>{" "}
+              <span className="text-bold">{element.symbol}</span>
+            </div>
             <br />
-            Equity Type: <span className="text-bold">{element.equityType}</span>
+            <div>
+              <strong>Equity Type: </strong>
+              <span className="text-bold">{element.equityType}</span>
+            </div>
             <br />
-            Price: <span className="text-bold">{element.price}</span>
+            <div>
+              <strong>Price:</strong>{" "}
+              <span className="text-bold">{element.price}</span>
+            </div>
             <br />
-            Sector: <span className="text-bold">{element.sector}</span>
+
+            <div>
+              <strong>Sector:</strong>{" "}
+              <span className="text-bold">{element.sector}</span>
+            </div>
             <br />
-            Industry: <span className="text-bold">{element.industry}</span>
+
+            <div>
+              <strong>Industry:</strong>{" "}
+              <span className="text-bold">{element.industry}</span>
+            </div>
             <br />
-            50 Day Moving Average:{" "}
-            <span className="text-bold">{element.fiftyDayMovingAverage}</span>
+            <div>
+              <strong>50 Day Moving Average:</strong>{" "}
+              <span className="text-bold">{element.fiftyDayMovingAverage}</span>
+            </div>
             <br />
-            52 Week High:{" "}
-            <span className="text-bold">{element.oneYearHigh}</span>
+            <div>
+              <strong>52 Week High:</strong>{" "}
+              <span className="text-bold">{element.oneYearHigh}</span>
+            </div>
             <br />
-            52 Week Low: <span className="text-bold">{element.oneYearLow}</span>
+
+            <div>
+              <strong>52 Week Low:</strong>{" "}
+              <span className="text-bold">{element.oneYearLow}</span>
+            </div>
             <br />
-            Analyst Target Price:{" "}
-            <span className="text-bold">{element.analystTargetPrice}</span>
-            <br />
-            Company Description:{" "}
-            <span className="text-bold">{element.description}</span>
+            <div>
+              <strong>Analyst Target Price:</strong>{" "}
+              <span className="text-bold">{element.analystTargetPrice}</span>
+            </div>
             <br />
           </div>
           <div clasName="my-auto">

@@ -25,3 +25,14 @@ CREATE TABLE public.stock_purchases (
 	CONSTRAINT stock_purchases_fk FOREIGN KEY (user_uuid) REFERENCES public.users(uuid)
 );
 
+
+CREATE TABLE public.user_account_values (
+	user_uuid uuid NOT NULL,
+	account_cash float4 NOT NULL DEFAULT 250000,
+	user_account_values_id serial4 not null,
+	constraint user_account_values PRIMARY KEY (user_account_values_id),
+	CONSTRAINT user_account_values FOREIGN KEY (user_uuid) REFERENCES public.users(uuid)
+);
+
+
+

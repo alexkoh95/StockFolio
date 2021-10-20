@@ -8,6 +8,7 @@ import Visualisation from "./Visualisation";
 
 const Dashboard = () => {
   //need to import account information here
+  const accountCashDefaultValue = 250000;
 
   //need to import account's stock information here
   return (
