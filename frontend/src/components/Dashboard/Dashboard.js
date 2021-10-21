@@ -10,6 +10,40 @@ const moment = require("moment");
 
 const Dashboard = () => {
   // =====================================================
+  //                 SET UP FINNHUB API CALL
+  // =====================================================
+  const finnhub = require("finnhub");
+  const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+  api_key.apiKey = "c5olrciad3idr38tbmig";
+  const finnhubClient = new finnhub.DefaultApi();
+
+  const yesterdayUNIX = Math.round(
+    moment().subtract(1, "days").format("x") * 0.001
+  );
+  const todayUNIX = Math.round(moment().format("x") * 0.001);
+  //fields:
+  /*
+  symbol, resolution (e.g. 1, 5, 15, 30, 60, D, W, M. This is time frames), from (UNIX TIMESTAMP. Interval initial value), to (UNIX TIMESTAMP. Interval end value)
+  */
+  //resuts: c = close, h = high, l = low, o = open, s = status, t = timestamp, v = volume
+
+  // finnhubClient.stockCandles(
+  //   "AAPL",
+  //   "D",
+  //   1590988249,
+  //   1591852249,
+  //   (error, data, response) => {
+  //     // console.log(data);
+  //   }
+  // );
+
+  // const calculateTodayStockPrice = () => {};
+
+  // useEffect(async () => {
+  //   await calculateTodayStockPrice();
+  // }, [fetchAllUserInformation]);
+
+  // =====================================================
   //                 SET UP USER ACCOUNT INFORMATION
   // =====================================================
   const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -24,9 +58,14 @@ const Dashboard = () => {
   const [userAccountInfo, setUserAccountInfo] = useState({});
   const [userStockInfo, setUserStockInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingForData, setIsLoadingForData] = useState(true);
   const [calculatedStockValue, setCalculatedStockValue] = useState();
   const [stockValueAtPurchaseToMinusCash, setStockValueAtPurchaseToMinusCash] =
     useState();
+  const [stockPriceNow, setStockPriceNow] = useState([]);
+  const [listOfSymbolsState, setListOfSymbolsState] = useState([]);
+
+  let listOfSymbols = [];
 
   const fetchAllUserInformation = async () => {
     const submit = { email: userName };
@@ -53,16 +92,16 @@ const Dashboard = () => {
       body: JSON.stringify(submit2),
     };
     const res2 = await fetch("http://localhost:5000/stockpurchase", config2);
-    console.log(res2);
+    // console.log(res2);
     const data2 = await res2.json();
-    console.log(data2);
+    // console.log(data2);
     setUserStockInfo(data2);
 
     let calculateStockValue = 0;
     calculateStockValue = data2
       .map((item) => item.value_at_time_of_purchase)
       .reduce((prev, curr) => prev + curr, 0);
-    console.log(calculateStockValue);
+    // console.log(calculateStockValue);
 
     setCalculatedStockValue(calculateStockValue);
 
@@ -75,44 +114,62 @@ const Dashboard = () => {
       calculateStockValueAtPurchaseToMinusCash
     );
 
+    data2.map((symbol) => {
+      setListOfSymbolsState((prevState) => [...prevState, symbol.symbol]);
+    });
+
+    listOfSymbols = data2.map((symbol) => symbol.symbol);
+
+    // console.log(listOfSymbols);
+
     setIsLoading(false);
-    console.log(isLoading);
+
+    // console.log(yesterdayUNIX);
+    // console.log(todayUNIX);
+
+    // finnhubClient.quote(listOfSymbols[5], (error, data, response) => {
+    //   setStockPriceNow((prevState) => [...prevState, data.c]);
+    // });
+    // console.log(stockPriceNow);
+
+    const getTodayStockPrice = async () => {
+      for (let i = 0; i < listOfSymbols.length; i++) {
+        finnhubClient.quote(listOfSymbols[i], (error, data, response) => {
+          setStockPriceNow((prevState) => [...prevState, data.c]);
+          setIsLoadingForData(false);
+        });
+
+        // isLoadingForData
+        //   ? (todaySymbolStockPriceObject[i] = {
+        //       symbol: listOfSymbols[i],
+        //       price: "loading",
+        //     })
+        //   : (todaySymbolStockPriceObject[i] = {
+        //       symbol: listOfSymbols[i],
+        //       price: stockPriceNow[i],
+        //     });
+      }
+    };
+    getTodayStockPrice();
   };
 
   useEffect(async () => {
     await fetchAllUserInformation();
   }, []);
 
-  // =====================================================
-  //                 SET UP FINNHUB API CALL
-  // =====================================================
-  const finnhub = require("finnhub");
-  const api_key = finnhub.ApiClient.instance.authentications["api_key"];
-  api_key.apiKey = "c5olrciad3idr38tbmig";
-  const finnhubClient = new finnhub.DefaultApi();
+  let todaySymbolStockPriceObject = [];
 
-  const yesterdayUNIX = moment().subtract(1, "days").format("x");
-  const todayUNIX = moment().format("x");
-  //fields:
-  /*
-  symbol, resolution (e.g. 1, 5, 15, 30, 60, D, W, M. This is time frames), from (UNIX TIMESTAMP. Interval initial value), to (UNIX TIMESTAMP. Interval end value)
-  */
-  //resuts: c = close, h = high, l = low, o = open, s = status, t = timestamp, v = volume
-  finnhubClient.stockCandles(
-    "AAPL",
-    "D",
-    1590988249,
-    1591852249,
-    (error, data, response) => {
-      console.log(data);
+  console.log(listOfSymbolsState);
+
+  useEffect(() => {
+    for (let i = 0; i < listOfSymbolsState.length; i++) {
+      todaySymbolStockPriceObject[i] = {
+        symbol: listOfSymbolsState[i],
+        price: stockPriceNow[i],
+      };
     }
-  );
-
-  const calculateTodayStockPrice = () => {};
-
-  useEffect(async () => {
-    await calculateTodayStockPrice();
-  }, [fetchAllUserInformation]);
+    console.log(todaySymbolStockPriceObject);
+  }, [stockPriceNow]);
 
   // =====================================================
   //                 RETURN
