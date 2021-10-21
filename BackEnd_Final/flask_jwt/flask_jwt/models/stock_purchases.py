@@ -1,5 +1,6 @@
 from typing import List
 
+
 from sqlalchemy.dialects.postgresql import UUID, TIMESTAMP
 
 from models.db import db
@@ -23,24 +24,8 @@ class StockPurchasesModel(db.Model):
     is_sold = db.Column(db.Boolean, nullable=False)
 
     @classmethod
-    def find_by_email(cls, email: str):
-        return cls.query.filter_by(email=email).first()
-
-     # @classmethod
-     # def find_by_user_uuid(cls, user_uuid: str) -> List["AuthModel"]:
-     # return AuthModel.query.filter_by(user_uuid=user_uuid).all()
-
-    #  @classmethod
-    #  def find_by_jti(cls, jti: str) -> "AuthModel":
-    #  return AuthModel.query.filter_by(jti=jti).first()
-
-    #  @classmethod
-    #   def find_by_parent_access_token_id(cls, _id: int) -> "AuthModel":
-    #  return AuthModel.query.filter_by(parent_access_token_id=_id).first()
-
-    #  def delete(self) -> None:
-    #  db.session.delete(self)
-    #  db.session.commit()
+    def find_by_user_uuid(cls, user_uuid: UUID):
+        return cls.query.filter_by(user_uuid=user_uuid).all() #  this seems to be the problem - all just returns a {}
 
     def save(self) -> None:
         db.session.add(self)

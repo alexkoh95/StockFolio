@@ -35,7 +35,7 @@ function App() {
     <Router>
       <AuthenticationContext.Provider value={tokens}>
         <UserNameContext.Provider value={userName}>
-          <div className="App bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-100 min-h-screen">
+          <div className="App bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 min-h-screen">
             <main>
               <Switch>
                 <Route path="/signin" exact>

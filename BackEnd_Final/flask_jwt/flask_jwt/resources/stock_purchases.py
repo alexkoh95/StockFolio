@@ -88,15 +88,15 @@ class StockPurchases(Resource):
             return {'Error': 'Stock Not Purchased'}, 400
 
         return {'msg': 'Stock Purchased.'}, 200
-    #
-    # # select user with email
-    # @classmethod
-    # @jwt_required()
-    # def post(cls):
-    #     input_json = schemas.InputEmail().load(request.get_json())
-    #     users_model = UsersModel.find_by_email(input_json['email'])
-    #
-    #     return schemas.Users().dump(users_model), 200
+
+    # select user's stocks with uuid
+    @classmethod
+    @jwt_required()
+    def post(cls):
+        input_json = schemas.InputUUID().load(request.get_json())
+        stock_info = StockPurchasesModel.find_by_user_uuid(input_json['uuid'])
+
+        return schemas.StockPurchases(many=True).dump(stock_info), 200
     #
     # # update user
     # @classmethod

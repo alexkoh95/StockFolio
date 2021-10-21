@@ -48,7 +48,7 @@ const SignIn = (props) => {
       try {
         const res = await fetch("http://localhost:5000/login", requestOptions);
         const data = await res.json();
-        console.log("this is data:", data);
+        // console.log("this is data:", data);
         console.log(
           "Backend POST method successfully run - email, password authenticated"
         );

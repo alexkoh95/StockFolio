@@ -36,15 +36,15 @@ class UserAccountValue(Resource):
             return {'Error': 'User Account Value not created (You have no money!)'}, 400
 
         return {'msg': 'User Account Value Created - You have $250,000!.'}, 200
-    #
-    # # select user with email
-    # @classmethod
-    # @jwt_required()
-    # def post(cls):
-    #     input_json = schemas.InputEmail().load(request.get_json())
-    #     users_model = UsersModel.find_by_email(input_json['email'])
-    #
-    #     return schemas.Users().dump(users_model), 200
+
+    # select user with email
+    @classmethod
+    @jwt_required()
+    def post(cls):
+        input_json = schemas.InputEmail().load(request.get_json())
+        users_model = UsersModel.find_by_email(input_json['email'])
+
+        return schemas.Users().dump(users_model), 200
     #
     # # update user
     # @classmethod

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const SideNavBar = () => {
   return (
-    <div className=" fixed h-screen w-60 bg-white bg-opacity-20 object-center shadow-lg text-gray-700">
+    <div className="container fixed h-screen w-60 bg-white bg-opacity-20 shadow-lg text-gray-700">
       <div className="pt-12">
         {" "}
-        <h1 className="font-extrabold text-2xl text-indigo-600">
-          <Link to="/dashboard">StockFolio</Link>
+        <h1 className="font-extrabold text-2xl text-indigo-600 object-center">
+          <Link to="/dashboard"> StockFolio</Link>
         </h1>{" "}
       </div>
 

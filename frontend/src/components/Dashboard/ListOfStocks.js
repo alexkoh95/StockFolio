@@ -1,56 +1,97 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { AuthenticationContext } from "../SignupLogin/AuthenticationTokens";
-import { UserNameContext } from "../SignupLogin/UserNameGlobal";
 
-const ListOfStocks = () => {
-  const tokens = useContext(AuthenticationContext);
-  const userName = useContext(UserNameContext);
+const ListOfStocks = (props) => {
+  // =====================================================
+  //                  Visualise Table
+  // =====================================================
 
-  console.log(userName);
-
-  const fetchUserEmail = async () => {
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${tokens.access}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: { email: JSON.stringify(userName) },
-    // };
-    // try {
-    //   console.log(requestOptions.body);
-    //   const res = await fetch("http://localhost:5000/users", requestOptions);
-    //   const data = await res.json();
-    //   console.log("this is data:", data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    const submit = { email: userName };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${tokens.access}`,
-        "Content-Type": "application/json",
-      },
-    };
-    axios
-      .post("http://localhost:5000/users", submit, config)
-      .then((res) => console.log("Stock Purchase Successful", res.data));
-    // }
-  };
+  let displayListOfStocks2 = [];
 
   useEffect(() => {
-    fetchUserEmail();
-  }, []);
+    // console.log(props.userStockInfo);
 
-  return <div>This is ListOfStocks</div>;
+    displayListOfStocks2 =
+      props.userStockInfo.length &&
+      props.userStockInfo.map((element, index) => {
+        return (
+          <tr>
+            <td>{element.stock_name}</td>
+            <td>{element.symbol}</td>
+            <td>{element.sector}</td>
+            <td>{element.industry}</td>
+            <td>{element.date_bought}</td>
+            <td>{element.total_shares}</td>
+            <td>{element.price_bought}</td>
+            <td>{element.value_at_time_of_purchase}</td>
+          </tr>
+        );
+      });
+  }, [props.userStockInfo]);
+
+  return (
+    <div>
+      <table className="border-collapse border border-gray-700">
+        <thead>
+          <tr>
+            <th className="border-collapse border border-gray-700">
+              Stock Name
+            </th>
+            <th className="border-collapse border border-gray-700">Symbol</th>
+            <th className="border-collapse border border-gray-700">Sector </th>
+            <th className="border-collapse border border-gray-700">Industry</th>
+            <th className="border-collapse border border-gray-700">
+              Date Bought
+            </th>
+            <th className="border-collapse border border-gray-700">
+              Total Shares
+            </th>
+            <th className="border-collapse border border-gray-700">
+              Price Bought
+            </th>
+            <th className="border-collapse border border-gray-700">
+              Value at Time of Purchase
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="text-xs">
+          {props.isLoading ? (
+            <p>Loading ...</p>
+          ) : (
+            props.userStockInfo?.map((element, index) => (
+              <tr>
+                <td className="border-collapse border border-gray-700">
+                  {element.stock_name}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.symbol}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.sector}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.industry}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.date_bought}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.total_shares}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.price_bought}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.value_at_time_of_purchase}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default ListOfStocks;
-
-// axios
-//   .post("http://localhost:5000/users", config)
-//   .then((res) => console.log("successfully pulled user email", res));
-// // fetch("http://localhost:5000/users", requestOptions)
-// //   .then((res) => res.json())
-// //   .then((res) => console.log("this is res: ", res));
