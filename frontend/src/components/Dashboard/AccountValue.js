@@ -4,6 +4,10 @@ import { UserNameContext } from "../SignupLogin/UserNameGlobal";
 const moment = require("moment");
 
 const AccountValue = (props) => {
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   const todayDate = moment().format("YYYY-MM-DD");
   const accountCashValueDefault = props.accountCashDefaultValue;
 
@@ -26,8 +30,10 @@ const AccountValue = (props) => {
           <h1 className="text-lg pb-4 text-gray-300">
             {" "}
             Total Cash in Account{" "}
-            {props.accountCashDefaultValue -
-              props.stockValueAtPurchaseToMinusCash}
+            {currencyFormatter.format(
+              props.accountCashDefaultValue -
+                props.stockValueAtPurchaseToMinusCash
+            )}
           </h1>
           <h1 className="text-lg pb-4 text-gray-300">Your Stock Value is</h1>
         </div>

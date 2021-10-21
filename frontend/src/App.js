@@ -12,6 +12,7 @@ import StockSearch from "./components/StockSearch/StockSearch";
 import Performance from "./components/Performance/Performance";
 import SignIn from "./components/SignupLogin/SignIn";
 import SignUp from "./components/SignupLogin/SignUp";
+import SignOut from "./components/SignupLogin/SignOut";
 import { AuthenticationContext } from "./components/SignupLogin/AuthenticationTokens";
 import { UserNameContext } from "./components/SignupLogin/UserNameGlobal";
 
@@ -83,6 +84,14 @@ function App() {
                   auth={auth}
                   userLogin={user}
                 />
+                <Route path="/signout" exact>
+                  <SignOut
+                    handleSignIn={handleSignIn}
+                    setAuth={setAuth}
+                    setTokens={setTokens}
+                    setUserName={setUserName}
+                  />
+                </Route>
               </Switch>
             </main>
           </div>
@@ -105,7 +114,7 @@ function PrivateRoute({ auth, Component, path, location, ...rest }) {
       ) : (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: "/signout",
             state: { from: location },
           }}
         />

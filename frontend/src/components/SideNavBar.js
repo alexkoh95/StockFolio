@@ -115,7 +115,7 @@ const SideNavBar = () => {
           </svg>
           <span className="inline-flex ml-3">
             {" "}
-            <Link to="/"> Logout </Link>
+            <Link to="/signout"> Logout </Link>
           </span>
         </div>
       </div>

@@ -99,7 +99,7 @@ const SignIn = (props) => {
         </form>
       </div>
       <span className="text-xs absolute inset-x-0 bottom-0 pb-8 text-xs font-light uppercase tracking-wide">
-        ©2021 Counting Bros
+        ©2021 StockFolio
       </span>
     </div>
   );

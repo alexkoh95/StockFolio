@@ -6,11 +6,16 @@ import ListOfStocks from "./ListOfStocks";
 import Visualisation from "./Visualisation";
 import { AuthenticationContext } from "../SignupLogin/AuthenticationTokens";
 import { UserNameContext } from "../SignupLogin/UserNameGlobal";
+const moment = require("moment");
 
 const Dashboard = () => {
   // =====================================================
   //                 SET UP USER ACCOUNT INFORMATION
   // =====================================================
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   const accountCashDefaultValue = 250000;
 
   const tokens = useContext(AuthenticationContext);
@@ -78,22 +83,40 @@ const Dashboard = () => {
     await fetchAllUserInformation();
   }, []);
 
-  // ======================================================================
-  //  Calculate user stock info
-  // ======================================================================
+  // =====================================================
+  //                 SET UP FINNHUB API CALL
+  // =====================================================
+  const finnhub = require("finnhub");
+  const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+  api_key.apiKey = "c5olrciad3idr38tbmig";
+  const finnhubClient = new finnhub.DefaultApi();
 
-  // const totalStockValue = 0;
+  const yesterdayUNIX = moment().subtract(1, "days").format("x");
+  const todayUNIX = moment().format("x");
+  //fields:
+  /*
+  symbol, resolution (e.g. 1, 5, 15, 30, 60, D, W, M. This is time frames), from (UNIX TIMESTAMP. Interval initial value), to (UNIX TIMESTAMP. Interval end value)
+  */
+  //resuts: c = close, h = high, l = low, o = open, s = status, t = timestamp, v = volume
+  finnhubClient.stockCandles(
+    "AAPL",
+    "D",
+    1590988249,
+    1591852249,
+    (error, data, response) => {
+      console.log(data);
+    }
+  );
 
-  // const calculateStockValue = () => {
-  //   totalStockValue = userStockInfo
-  //     .map((item) => item.value_at_time_of_purchase)
-  //     .reduce((prev, curr) => prev + curr, 0);
-  // };
+  const calculateTodayStockPrice = () => {};
 
-  // useEffect(async () => {
-  //   await calculateStockValue();
-  //   console.log(totalStockValue);
-  // }, [userStockInfo]);
+  useEffect(async () => {
+    await calculateTodayStockPrice();
+  }, [fetchAllUserInformation]);
+
+  // =====================================================
+  //                 RETURN
+  // =====================================================
 
   return (
     <h1>
@@ -109,15 +132,18 @@ const Dashboard = () => {
             isLoading={isLoading}
             calculatedStockValue={calculatedStockValue}
             stockValueAtPurchaseToMinusCash={stockValueAtPurchaseToMinusCash}
+            currencyFormatter={currencyFormatter}
           />
           <Visualisation
             userAccountInfo={userAccountInfo}
             userStockInfo={userStockInfo}
+            currencyFormatter={currencyFormatter}
           />
           <ListOfStocks
             userAccountInfo={userAccountInfo}
             userStockInfo={userStockInfo}
             isLoading={isLoading}
+            currencyFormatter={currencyFormatter}
           />
         </main>
       </div>

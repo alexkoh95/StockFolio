@@ -80,10 +80,12 @@ const ListOfStocks = (props) => {
                   {element.total_shares}
                 </td>
                 <td className="border-collapse border border-gray-700">
-                  {element.price_bought}
+                  {props.currencyFormatter.format(element.price_bought)}
                 </td>
                 <td className="border-collapse border border-gray-700">
-                  {element.value_at_time_of_purchase}
+                  {props.currencyFormatter.format(
+                    element.value_at_time_of_purchase
+                  )}
                 </td>
               </tr>
             ))
