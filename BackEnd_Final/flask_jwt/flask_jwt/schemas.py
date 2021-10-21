@@ -40,13 +40,17 @@ class InputStockPurchasesData(Schema):
     industry = fields.Str(required=True, validate=validate.Length(max=500))
     sector = fields.Str(required=True, validate=validate.Length(max=500))
     total_shares = fields.Float(required=True)  # change this to float or integer, depending on the
-    value_at_time_of_purchase = fields.Float(required=True,  validate=validate.Range(min=1))
+    value_at_time_of_purchase = fields.Float(required=True, validate=validate.Range(min=1))
     currency = fields.Str(required=True, validate=validate.Length(max=10))
     date_bought = fields.Str(required=True)
     is_sold = fields.Bool(required=True)
 
     class Meta:
         unknown = INCLUDE
+
+
+class InputStockPurchaseId(Schema):
+    stock_purchase_id = fields.Int(required=True)
 
 
 class InputRegistrationData(Schema):

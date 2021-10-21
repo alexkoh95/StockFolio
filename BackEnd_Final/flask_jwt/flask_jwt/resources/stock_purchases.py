@@ -97,7 +97,12 @@ class StockPurchases(Resource):
         stock_info = StockPurchasesModel.find_by_user_uuid(input_json['uuid'])
 
         return schemas.StockPurchases(many=True).dump(stock_info), 200
+
+    # @classmethod
+    # def patch(cls):
+    #     input_json = schemas.InputStockPurchaseId().load(request.get_json())
     #
+
     # # update user
     # @classmethod
     # @jwt_required()
@@ -131,22 +136,40 @@ class StockPurchases(Resource):
     #     else:
     #         return {'err': 'user not found'}, 400
     #
+
     @classmethod
     @jwt_required()
     def delete(cls):
-        claims = get_jwt()
 
-        if claims['role'] == 'ADMIN':
-            input_json = schemas.InputUUID().load(request.get_json())
-            user_model = StockPurchases.model.find_by_uuid(input_json['uuid'])
 
-            if user_model:
-                user_model.delete()
+        input_json = schemas.InputStockPurchaseId().load(request.get_json())
+        stock_to_delete = StockPurchasesModel.find_by_stock_purchase_id(input_json['stock_purchase_id'])
 
-                return {'info': 'stock entry'}, 200
 
-            else:
-                return {'err': 'stock entry found'}, 400
+        if stock_to_delete:
+            stock_to_delete.delete()
+
+            return{'info': 'stock has been deleted'}, 200
 
         else:
-            return {'err': 'not authorised'}, 401
+            return{'err': 'stock was not deleted'}, 400
+
+    # @classmethod
+    # @jwt_required()
+    # def delete(cls):
+    #     claims = get_jwt()
+    #
+    #     if claims['role'] == 'ADMIN':
+    #         input_json = schemas.InputUUID().load(request.get_json())
+    #         user_model = StockPurchases.model.find_by_uuid(input_json['uuid'])
+    #
+    #         if user_model:
+    #             user_model.delete()
+    #
+    #             return {'info': 'stock entry'}, 200
+    #
+    #         else:
+    #             return {'err': 'stock entry found'}, 400
+    #
+    #     else:
+    #         return {'err': 'not authorised'}, 401

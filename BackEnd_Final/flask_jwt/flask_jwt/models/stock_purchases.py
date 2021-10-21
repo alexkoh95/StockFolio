@@ -25,10 +25,20 @@ class StockPurchasesModel(db.Model):
 
     @classmethod
     def find_by_user_uuid(cls, user_uuid: UUID):
-        return cls.query.filter_by(user_uuid=user_uuid).all() #  this seems to be the problem - all just returns a {}
+        return cls.query.filter_by(user_uuid=user_uuid).all() #  this seems to be the problem - all just returns a {} problem solved - issue was Many=True in resources
+
+    # find by stock id
+    @classmethod
+    def find_by_stock_purchase_id(cls, stock_purchase_id: int):
+        return cls.query.filter_by(stock_purchase_id=stock_purchase_id).first()
+
 
     def save(self) -> None:
         db.session.add(self)
+        db.session.commit()
+
+    def delete(self) -> None:
+        db.session.delete(self)
         db.session.commit()
 
 # def prune_database():
@@ -37,3 +47,6 @@ class StockPurchasesModel(db.Model):
 #     for token in expired:
 #         db.session.delete(token)
 #     db.session.commit()
+
+
+
