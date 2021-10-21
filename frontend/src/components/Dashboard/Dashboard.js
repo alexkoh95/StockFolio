@@ -56,7 +56,7 @@ const Dashboard = () => {
   const userName = useContext(UserNameContext);
 
   const [userAccountInfo, setUserAccountInfo] = useState({});
-  const [userStockInfo, setUserStockInfo] = useState({});
+  const [userStockInfo, setUserStockInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingForData, setIsLoadingForData] = useState(true);
   const [calculatedStockValue, setCalculatedStockValue] = useState();
@@ -64,6 +64,7 @@ const Dashboard = () => {
     useState();
   const [stockPriceNow, setStockPriceNow] = useState([]);
   const [listOfSymbolsState, setListOfSymbolsState] = useState([]);
+  const [priceSymbolObject, setPriceSymbolObject] = useState([]);
 
   let listOfSymbols = [];
 
@@ -94,7 +95,7 @@ const Dashboard = () => {
     const res2 = await fetch("http://localhost:5000/stockpurchase", config2);
     // console.log(res2);
     const data2 = await res2.json();
-    // console.log(data2);
+    console.log(data2);
     setUserStockInfo(data2);
 
     let calculateStockValue = 0;
@@ -159,7 +160,7 @@ const Dashboard = () => {
 
   let todaySymbolStockPriceObject = [];
 
-  console.log(listOfSymbolsState);
+  // console.log(listOfSymbolsState);
 
   useEffect(() => {
     for (let i = 0; i < listOfSymbolsState.length; i++) {
@@ -168,7 +169,8 @@ const Dashboard = () => {
         price: stockPriceNow[i],
       };
     }
-    console.log(todaySymbolStockPriceObject);
+    // console.log(todaySymbolStockPriceObject);
+    setPriceSymbolObject(todaySymbolStockPriceObject);
   }, [stockPriceNow]);
 
   // =====================================================
@@ -190,17 +192,20 @@ const Dashboard = () => {
             calculatedStockValue={calculatedStockValue}
             stockValueAtPurchaseToMinusCash={stockValueAtPurchaseToMinusCash}
             currencyFormatter={currencyFormatter}
+            priceSymbolObject={priceSymbolObject}
           />
-          <Visualisation
+          {/* <Visualisation
             userAccountInfo={userAccountInfo}
             userStockInfo={userStockInfo}
             currencyFormatter={currencyFormatter}
-          />
+          /> */}
           <ListOfStocks
             userAccountInfo={userAccountInfo}
             userStockInfo={userStockInfo}
             isLoading={isLoading}
             currencyFormatter={currencyFormatter}
+            stockPriceNow={stockPriceNow}
+            priceSymbolObject={priceSymbolObject}
           />
         </main>
       </div>

@@ -131,22 +131,22 @@ class StockPurchases(Resource):
     #     else:
     #         return {'err': 'user not found'}, 400
     #
-    # @classmethod
-    # @jwt_required()
-    # def delete(cls):
-    #     claims = get_jwt()
-    #
-    #     if claims['role'] == 'ADMIN':
-    #         input_json = schemas.InputUUID().load(request.get_json())
-    #         user_model = UsersModel.find_by_uuid(input_json['uuid'])
-    #
-    #         if user_model:
-    #             user_model.delete()
-    #
-    #             return {'info': 'user deleted'}, 200
-    #
-    #         else:
-    #             return {'err': 'user not found'}, 400
-    #
-    #     else:
-    #         return {'err': 'not authorised'}, 401
+    @classmethod
+    @jwt_required()
+    def delete(cls):
+        claims = get_jwt()
+
+        if claims['role'] == 'ADMIN':
+            input_json = schemas.InputUUID().load(request.get_json())
+            user_model = StockPurchases.model.find_by_uuid(input_json['uuid'])
+
+            if user_model:
+                user_model.delete()
+
+                return {'info': 'stock entry'}, 200
+
+            else:
+                return {'err': 'stock entry found'}, 400
+
+        else:
+            return {'err': 'not authorised'}, 401

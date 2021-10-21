@@ -10,9 +10,36 @@ const AccountValue = (props) => {
   });
   const todayDate = moment().format("YYYY-MM-DD");
   const accountCashValueDefault = props.accountCashDefaultValue;
+  // const priceSymbolObject2 = props.priceSymbolObject;
+  // const userStockInfo2 = props.userStockInfo
+
+  const newArrayForProfits = [];
+  for (const stockInfo of props.userStockInfo) {
+    for (const priceSymbol of props.priceSymbolObject) {
+      if (stockInfo.symbol === priceSymbol.symbol) {
+        const newObject = {
+          profit:
+            stockInfo.total_shares *
+            (priceSymbol.price - stockInfo.price_bought),
+        };
+        newArrayForProfits.push(newObject);
+        break;
+      }
+    }
+  }
+
+  // console.log(newArrayForProfits);
+
+  // listOfSymbols = data2.map((symbol) => symbol.symbol);
+
+  const totalProfits = newArrayForProfits
+    .map((profit) => profit.profit)
+    .reduce((prev, curr) => prev + curr, 0);
+  // console.log(totalProfits);
 
   const today = moment().format("dddd MMMM Do YYYY");
   const userName = useContext(UserNameContext);
+
   return (
     <React.Fragment>
       <div className="col-span-2">
@@ -27,6 +54,10 @@ const AccountValue = (props) => {
             Hello, {props.isLoading ? <p>Loading...</p> : userName}
           </h1>
           <h1 className="text-lg pb-4 text-gray-300">{today}</h1>
+          {/* <h1 className="text-lg pb-4 text-gray-300">
+            {" "}
+            Initial Cash {currencyFormatter.format(250000)}
+          </h1> */}
           <h1 className="text-lg pb-4 text-gray-300">
             {" "}
             Total Cash in Account{" "}
@@ -35,10 +66,14 @@ const AccountValue = (props) => {
                 props.stockValueAtPurchaseToMinusCash
             )}
           </h1>
-          <h1 className="text-lg pb-4 text-gray-300">Your Stock Value is</h1>
+          <h1 className="text-lg pb-4 text-gray-300">
+            Your Stock Value is{" "}
+            {currencyFormatter.format(
+              totalProfits + props.stockValueAtPurchaseToMinusCash
+            )}
+          </h1>
         </div>
       </div>
-      ;
     </React.Fragment>
   );
 };

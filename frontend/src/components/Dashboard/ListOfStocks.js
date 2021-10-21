@@ -8,26 +8,32 @@ const ListOfStocks = (props) => {
 
   let displayListOfStocks2 = [];
 
-  useEffect(() => {
-    // console.log(props.userStockInfo);
+  for (const stockInfo of props.userStockInfo) {
+    for (const priceSymbol of props.priceSymbolObject) {
+      if (stockInfo.symbol === priceSymbol.symbol) {
+        const newObject = {
+          ...stockInfo,
+          ...priceSymbol,
+        };
+        displayListOfStocks2.push(newObject);
+        break;
+      }
+    }
+  }
 
-    displayListOfStocks2 =
-      props.userStockInfo.length &&
-      props.userStockInfo.map((element, index) => {
-        return (
-          <tr>
-            <td>{element.stock_name}</td>
-            <td>{element.symbol}</td>
-            <td>{element.sector}</td>
-            <td>{element.industry}</td>
-            <td>{element.date_bought}</td>
-            <td>{element.total_shares}</td>
-            <td>{element.price_bought}</td>
-            <td>{element.value_at_time_of_purchase}</td>
-          </tr>
-        );
-      });
-  }, [props.userStockInfo]);
+  // for (let i = 0; i < props.userStockInfo.length; i++) {
+  //   const newObject = {
+  //     ...props.userStockInfo[i],
+  //     ...props.priceSymbolObject[i],
+  //   };
+
+  //   displayListOfStocks2.push(newObject);
+  // }
+  // console.log(displayListOfStocks2);
+
+  // props.userStockInfo
+
+  // props.priceSymbolObject
 
   return (
     <div>
@@ -52,6 +58,9 @@ const ListOfStocks = (props) => {
             <th className="border-collapse border border-gray-700">
               Value at Time of Purchase
             </th>
+            <th className="border-collapse border border-gray-700">
+              Price Today
+            </th>
           </tr>
         </thead>
 
@@ -59,7 +68,7 @@ const ListOfStocks = (props) => {
           {props.isLoading ? (
             <p>Loading ...</p>
           ) : (
-            props.userStockInfo?.map((element, index) => (
+            displayListOfStocks2.map((element, index) => (
               <tr>
                 <td className="border-collapse border border-gray-700">
                   {element.stock_name}
@@ -86,6 +95,9 @@ const ListOfStocks = (props) => {
                   {props.currencyFormatter.format(
                     element.value_at_time_of_purchase
                   )}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {props.currencyFormatter.format(element.price)}
                 </td>
               </tr>
             ))
