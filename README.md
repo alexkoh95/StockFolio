@@ -26,12 +26,10 @@ This app was created by Alex Koh as part of the requirements in his General Asse
 - Bug 1.01 **Displaying Price Today**: Real-time stock quotation is not matched to the right stock (match is based on Symbol). For example, Facebook Inc will have Sea Limited's real-time stock quotation, while Walmart will have Facebook's real-time stock quotation See lines 11-22 in /StockFolio/frontend/src/components/Dashboard/ListOfStocks.js
 - Bug 1.02 **Displaying Stock Value**: Due to the bug in 1.01, stock value is not accurate (as profits will not be calculated correctly due to incorrect mapping of real-time stock quotation).
 
-Major Updates: 
+🆕 Major Updates: 
 - Update to Version 2.01: 
   -  To restructure the project. For example, pull all relevant user data during log-in and use useContext to share the data across the entire project. 
   -  To apply the concepts in Robert C. Martin's Clean Code (for example, making sure each function only has one purpose, using good naming conventions)
-
-
 
 ## App Functions:
 
@@ -45,16 +43,15 @@ The MVP (minimal viable product) to meet the requirements of GA has been met. Us
 
 ## Project Screen Shot(s)
 
-### Login Screen / Sign Up Screen
-
-![Login Screen](https://imgur.com/L2rMccu.jpg)
-
 ### Dashboard
 
-![Dashboard](https://imgur.com/OqJy7ae.jpg)
+![Dashboard](https://imgur.com/toSRDMO.jpg)
 
 ### Stock Search
-![Log Page](https://imgur.com/cvgj3gx.jpg)
+![Stock Search](https://imgur.com/3tkZVyT.jpg)
+
+### Data Base (For Stocks)
+![Database](https://imgur.com/ZDWxyq8.jpg)
 
 
 
@@ -67,4 +64,8 @@ This was a week long built during the fourth module at General Assembly (GA) Sin
  - (3) Storing data in a database 
  - (4) Learn one new concept/technology 
 
-I prioritised two learnings for this project: (1) How to use Flask, (2) How to 
+I prioritised two learnings for this project: (1) How to use new technologies, Flask and PostgreSQL in this project (2) How to understand and write more modular code. I had already learnt how to use Express and MongoDB Atlas in my previous project and wanted to learn another method to create APIs and store data.
+
+Aims (1) and (2) were achieved by spending time understanding codes that the lead instructor (Desmond Lim) shared with us in class. I spent about 1.5 - 2 days (out of 5 days) on learning how to use Flask and understanding the codes. By breaking down his codes, I was able to write my own codes in Python to set up the POST, GET, and DELETE methods to store, display, and delete stock information to and from the database (see /StockFolio/BackEnd_Final/flask_jwt/flask_jwt/resources/stock_purchases.py and /StockFolio/BackEnd_Final/flask_jwt/flask_jwt/models/stock_purchases.py). I am particularly impressed with how modular the codes are which all cleaner code and less repitition (for example, rather than repeating the same lines of code to find stocks by id, I instead created a classmethod "find_by_stock_purchase_id" in the StockPurchaseModel class). 
+
+This has inspired me to read "Clean Code" By Robert C. Martin. My next aim (as of 1 November 2021) is to restructure the entire project from scratch based on the principles in the book (e.g. functions should only have one purpose, functions that can be re-used).
