@@ -26,8 +26,8 @@ This app was created by Alex Koh as part of the requirements in his General Asse
 - Bug 1.01 **Displaying Price Today**: Real-time stock quotation is not matched to the right stock (match is based on Symbol). For example, Facebook Inc will have Sea Limited's real-time stock quotation, while Walmart will have Facebook's real-time stock quotation See lines 11-22 in /StockFolio/frontend/src/components/Dashboard/ListOfStocks.js
 - Bug 1.02 **Displaying Stock Value**: Due to the bug in 1.01, stock value is not accurate (as profits will not be calculated correctly due to incorrect mapping of real-time stock quotation).
 
-🆕 Major Updates: 
-- Update to Version 2.01: 
+🆕 Scheduled Major Updates: 
+- Update to Version 2.01: (Aim for end of Week of 1 Nov 2021)  
   -  To restructure the project. For example, pull all relevant user data during log-in and use useContext to share the data across the entire project. 
   -  To apply the concepts in Robert C. Martin's Clean Code (for example, making sure each function only has one purpose, using good naming conventions)
 
