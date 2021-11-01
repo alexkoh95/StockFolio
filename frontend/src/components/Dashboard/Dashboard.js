@@ -37,12 +37,6 @@ const Dashboard = () => {
   //   }
   // );
 
-  // const calculateTodayStockPrice = () => {};
-
-  // useEffect(async () => {
-  //   await calculateTodayStockPrice();
-  // }, [fetchAllUserInformation]);
-
   // =====================================================
   //                 SET UP USER ACCOUNT INFORMATION
   // =====================================================

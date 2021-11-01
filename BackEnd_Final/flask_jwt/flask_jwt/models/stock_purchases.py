@@ -41,12 +41,6 @@ class StockPurchasesModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-# def prune_database():
-#     now = datetime.now()
-#     expired = LoggedInModel.query.filter(LoggedInModel.expires < now).all()
-#     for token in expired:
-#         db.session.delete(token)
-#     db.session.commit()
 
 
 

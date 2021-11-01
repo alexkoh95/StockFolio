@@ -61,6 +61,9 @@ const ListOfStocks = (props) => {
             <th className="border-collapse border border-gray-700">
               Price Today
             </th>
+            <th className="border-collapse border border-gray-700">
+              Stock Purchase ID
+            </th>
           </tr>
         </thead>
 
@@ -98,6 +101,9 @@ const ListOfStocks = (props) => {
                 </td>
                 <td className="border-collapse border border-gray-700">
                   {props.currencyFormatter.format(element.price)}
+                </td>
+                <td className="border-collapse border border-gray-700">
+                  {element.stock_purchase_id}
                 </td>
               </tr>
             ))

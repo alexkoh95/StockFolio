@@ -98,49 +98,9 @@ class StockPurchases(Resource):
 
         return schemas.StockPurchases(many=True).dump(stock_info), 200
 
-    # @classmethod
-    # def patch(cls):
-    #     input_json = schemas.InputStockPurchaseId().load(request.get_json())
-    #
-
-    # # update user
-    # @classmethod
-    # @jwt_required()
-    # def patch(cls):
-    #     claims = get_jwt()
-    #
-    #     if claims['role'] == 'ADMIN':
-    #         input_json = schemas.InputUUID().load(request.get_json())
-    #         uuid = input_json['uuid']
-    #     else:
-    #         uuid = get_jwt_identity()
-    #
-    #     users_model = UsersModel.find_by_uuid(uuid)
-    #
-    #     if users_model:
-    #         input_json = schemas.InputEmailName().load(request.get_json())
-    #
-    #         if input_json.get('email') and len(input_json['email']) > 0 and input_json['email'] != users_model.email:
-    #             if find_duplicate_email(input_json['email']):
-    #                 return {'err': 'duplicate email'}
-    #
-    #             users_model.email = input_json['email']
-    #
-    #         if input_json.get('name') and len(input_json['name']) > 0 and input_json['name'] != users_model.name:
-    #             users_model.name = input_json['name']
-    #
-    #         users_model.save()
-    #
-    #         return {'info': 'user updated'}, 200
-    #
-    #     else:
-    #         return {'err': 'user not found'}, 400
-    #
-
     @classmethod
     @jwt_required()
     def delete(cls):
-
 
         input_json = schemas.InputStockPurchaseId().load(request.get_json())
         stock_to_delete = StockPurchasesModel.find_by_stock_purchase_id(input_json['stock_purchase_id'])
@@ -154,22 +114,4 @@ class StockPurchases(Resource):
         else:
             return{'err': 'stock was not deleted'}, 400
 
-    # @classmethod
-    # @jwt_required()
-    # def delete(cls):
-    #     claims = get_jwt()
-    #
-    #     if claims['role'] == 'ADMIN':
-    #         input_json = schemas.InputUUID().load(request.get_json())
-    #         user_model = StockPurchases.model.find_by_uuid(input_json['uuid'])
-    #
-    #         if user_model:
-    #             user_model.delete()
-    #
-    #             return {'info': 'stock entry'}, 200
-    #
-    #         else:
-    #             return {'err': 'stock entry found'}, 400
-    #
-    #     else:
-    #         return {'err': 'not authorised'}, 401
+
