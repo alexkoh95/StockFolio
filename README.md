@@ -44,8 +44,8 @@ The MVP (minimal viable product) to meet the requirements of GA has been met. Us
 ## Project Screen Shot(s)
 
 ### Dashboard
-
 ![Dashboard](https://imgur.com/toSRDMO.jpg)
+##### Note Bug 1.01 and 1.02 is evident in "Price Today" column in the table and in Stock Value in the photo
 
 ### Stock Search
 ![Stock Search](https://imgur.com/3tkZVyT.jpg)
