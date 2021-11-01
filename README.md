@@ -12,6 +12,17 @@ A finance application used to simulate personal investments, built with React, F
 
 Libraries used: Moment.js, Tailwind CSS
 
+APIs Used: Alpha Vantage, FinnHub
+
+## App Functions:
+
+The MVP (minimal viable product) to meet the requirements of GA has been met. Users can do the following:
+
+ - **Account Creation**: Users of the app can create an account and store their data. User is stored in database. Data presented in their dashboard are specific to the stocks they have purchased
+ - **Dashboard**: Users can view the total cash in their account, value of stocks, and stocks they have purchased (including Stock Name, Symbol, Sector, Industry, Date Bought, Total Shares, Price Bought, Value At Time Of Purchase, Price Today). User's data is stored in database. Real-time stock quotation to calculate profits obtained by calling FinnHub API
+ - **Stock Search**: Users can search for stocks (using the stock's symbol, e.g. FB, KO, SBUX). This is pulled using Alpha Vantage API
+ - **Logout**: Users can log out of their accounts. 
+
 ## Project Status
 Version 1.0 
 
@@ -30,16 +41,6 @@ This app was created by Alex Koh as part of the requirements in his General Asse
 - Update to Version 2.01: (Aim for end of Week of 1 Nov 2021)  
   -  To restructure the project. For example, pull all relevant user data during log-in and use useContext to share the data across the entire project. 
   -  To apply the concepts in Robert C. Martin's Clean Code (for example, making sure each function only has one purpose, using good naming conventions)
-
-## App Functions:
-
-The MVP (minimal viable product) to meet the requirements of GA has been met. Users can do the following:
-
- - **Account Creation**: Users of the app can create an account and store their data. Data presented in their dashboard are specific to the stocks they have purchased
- - **Dashboard**: Users can view the total cash in their account, value of stocks, and stocks they have purchased (including Stock Name, Symbol, Sector, Industry, Date Bought, Total Shares, Price Bought, Value At Time Of Purchase, Price Today)
- - **Stock Search**: Users can search for stocks (using the stock's symbol, e.g. FB, KO, SBUX)
- - **Logout**: Users can log out of their accounts. 
-
 
 ## Project Screen Shot(s)
 
